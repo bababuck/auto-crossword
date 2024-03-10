@@ -24,7 +24,7 @@ class HintGenerator:
                  "content":
                  f"write a cross word clue for "
                  f"{solution_word} {f'{modifier} ' if modifier else ''}"
-                 "using the fewest tokens possible."}
+                 "using less than 10 tokens"}
             ]
         )
         return response.choices[0].message.content

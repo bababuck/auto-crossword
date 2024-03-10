@@ -37,6 +37,9 @@ if __name__ == '__main__':
                         help='Append this to seed words to '
                         'help guide clue generation',
                         default='')
+    parser.add_argument('--difficulty',
+                        help='How hard to make crossword clues',
+                        default='easy')
 
     args = parser.parse_args()
 
@@ -50,5 +53,5 @@ if __name__ == '__main__':
                                                  args.minscore,
                                                  args.queryword):
         puzzle_generator = crossword_parser.PuzzleGenerator(
-            args.seedword_modifier, args.seedlist)
+            args.seedword_modifier, args.seedlist, args.difficulty)
         print(puzzle_generator)

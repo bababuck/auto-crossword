@@ -12,7 +12,7 @@ class HintGenerator:
         """Initialize OpenAI client."""
         self.client = OpenAI()
 
-    def __call__(self, solution_word, modifier):
+    def __call__(self, solution_word, modifier, difficulty='easy'):
         """Generate a crossword hint given a clue.
 
         Does this via request to GPT.
@@ -22,7 +22,7 @@ class HintGenerator:
             messages=[
                 {"role": "user",
                  "content":
-                 f"write a cross word clue for "
+                 f"write a {difficulty} cross word clue for "
                  f"{solution_word} {f'{modifier} ' if modifier else ''}"
                  "using less than 10 tokens"}
             ]

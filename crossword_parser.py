@@ -143,7 +143,7 @@ class PuzzleGenerator:
 
     Parses the required files for generating a crossword.
     """
-    def __init__(self, modifier, seedlist):
+    def __init__(self, modifier, seedlist, difficulty):
         if seedlist != "":
             with open(seedlist, "r") as seedlist_fd:
                 seedlist = {seed.lower().strip() for seed in seedlist_fd}
@@ -165,7 +165,8 @@ class PuzzleGenerator:
                                                   sol_info.answer,
                                                   hint_generator(
                                                       sol_info.answer,
-                                                      modifier)))
+                                                      modifier,
+                                                      difficulty)))
 
         self.board = CrosswordBoard("filled_grid.txt", clue_locs)
 

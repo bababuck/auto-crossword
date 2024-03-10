@@ -7,6 +7,8 @@ https://tex.stackexchange.com/questions/44775/how-to-create-a-crossword-
 puzzle-in-latex
 """
 
+from hint_generator import HintGenerator
+
 backslash = '\\'
 newLine = '\n'
 
@@ -144,6 +146,7 @@ class PuzzleGenerator:
     def __init__(self):
         clue_locs = {}
         self.clue_sets = [CrosswordClues('Across'), CrosswordClues('Down')]
+        hint_generator = HintGenerator()
         for clue_set in self.clue_sets:
             with open(f"{clue_set.dir}_words.txt", "r") as solution_file:
                 for solution_line in solution_file:
@@ -152,7 +155,8 @@ class PuzzleGenerator:
                         sol_info.number
                     clue_set.append(CrosswordClue(sol_info.number,
                                                   sol_info.answer,
-                                                  sol_info.answer))
+                                                  hint_generator(
+                                                      sol_info.answer)))
 
         self.board = CrosswordBoard("filled_grid.txt", clue_locs)
 

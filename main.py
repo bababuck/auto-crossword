@@ -40,6 +40,9 @@ if __name__ == '__main__':
     parser.add_argument('--difficulty',
                         help='How hard to make crossword clues',
                         default='easy')
+    parser.add_argument('--outfile',
+                        help='Tex file to print to',
+                        required=True)
 
     args = parser.parse_args()
 
@@ -54,4 +57,5 @@ if __name__ == '__main__':
                                                  args.queryword):
         puzzle_generator = crossword_parser.PuzzleGenerator(
             args.seedword_modifier, args.seedlist, args.difficulty)
-        print(puzzle_generator)
+        with open(args.outfile, 'w') as out_fd:
+            out_fd.write(str(puzzle_generator))

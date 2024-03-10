@@ -7,6 +7,11 @@ import argparse
 import crossword_compiler
 import crossword_parser
 
+
+class IllegalArgumentError(Exception):
+    """An illegal combination of command line arguments were specified."""
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Create a crossword puzzle')
     parser.add_argument('--wordlist',
@@ -28,12 +33,22 @@ if __name__ == '__main__':
     parser.add_argument('--queryword',
                         help='Word to preferentially choose words related too',
                         default="")
+    parser.add_argument('--seedword-modifier',
+                        help='Append this to seed words to '
+                        'help guide clue generation',
+                        default='')
 
     args = parser.parse_args()
+
+    if args.seedlist == "" and args.seedword_modifier != "":
+        raise IllegalArgumentError(
+            "Cannot have seedword-modifier without a seedlist")
+
     if not crossword_compiler.generate_crossword(args.wordlist,
                                                  args.gridfile,
                                                  args.seedlist,
                                                  args.minscore,
                                                  args.queryword):
-        puzzle_generator = crossword_parser.PuzzleGenerator()
+        puzzle_generator = crossword_parser.PuzzleGenerator(
+            args.seedword_modifier, args.seedlist)
         print(puzzle_generator)

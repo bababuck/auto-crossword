@@ -143,7 +143,12 @@ class PuzzleGenerator:
 
     Parses the required files for generating a crossword.
     """
-    def __init__(self):
+    def __init__(self, modifier, seedlist):
+        if seedlist != "":
+            with open(seedlist, "r") as seedlist_fd:
+                seedlist = {seed.lower().strip() for seed in seedlist_fd}
+        else:
+            seedlist = None
         clue_locs = {}
         self.clue_sets = [CrosswordClues('Across'), CrosswordClues('Down')]
         hint_generator = HintGenerator()
@@ -151,12 +156,16 @@ class PuzzleGenerator:
             with open(f"{clue_set.dir}_words.txt", "r") as solution_file:
                 for solution_line in solution_file:
                     sol_info = SolutionLine(solution_line)
+                    modifier = modifier if \
+                        seedlist and sol_info.answer in seedlist \
+                        else None
                     clue_locs[f'{sol_info.row},{sol_info.col}'] = \
                         sol_info.number
                     clue_set.append(CrosswordClue(sol_info.number,
                                                   sol_info.answer,
                                                   hint_generator(
-                                                      sol_info.answer)))
+                                                      sol_info.answer,
+                                                      modifier)))
 
         self.board = CrosswordBoard("filled_grid.txt", clue_locs)
 

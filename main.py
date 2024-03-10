@@ -59,3 +59,5 @@ if __name__ == '__main__':
             args.seedword_modifier, args.seedlist, args.difficulty)
         with open(args.outfile, 'w') as out_fd:
             out_fd.write(str(puzzle_generator))
+    else:
+        print("Failed to generate crossoword")

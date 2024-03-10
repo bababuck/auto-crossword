@@ -17,8 +17,8 @@ crossword_compiler.generate.restype = ctypes.c_int
 
 def generate_crossword(wordlist_path,
                        gridfile_path,
-                       seedlist_path="",
-                       minimum_score=50):
+                       seedlist_path,
+                       minimum_score):
     wordlist_path = wordlist_path.encode('utf-8')
     gridfile_path = gridfile_path.encode('utf-8')
     seedlist_path = seedlist_path.encode('utf-8')

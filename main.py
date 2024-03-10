@@ -25,11 +25,15 @@ if __name__ == '__main__':
                         help='Minimum word score to accept',
                         type=int,
                         default=50)
+    parser.add_argument('--queryword',
+                        help='Word to preferentially choose words related too',
+                        default="")
 
     args = parser.parse_args()
     if not crossword_compiler.generate_crossword(args.wordlist,
                                                  args.gridfile,
                                                  args.seedlist,
-                                                 args.minscore):
+                                                 args.minscore,
+                                                 args.queryword):
         puzzle_generator = crossword_parser.PuzzleGenerator()
         print(puzzle_generator)
